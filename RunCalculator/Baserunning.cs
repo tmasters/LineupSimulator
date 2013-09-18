@@ -67,18 +67,18 @@ namespace BaseballLineupSimulator
         /// <summary>
         /// A single occurs with runner on first
         /// </summary>
-        /// <param name="random">a random number (0-99)</param>
+        /// <param name="random">a random number (0-1)</param>
         /// <param name="outs">number of outs</param>
         /// <param name="speedIndex">speed index of the player</param>
         /// <returns>the outcome of the event</returns>
-        public Outcome SingleWithRunnerOnFirst(int random, int outs, int speedIndex)
+        public Outcome SingleWithRunnerOnFirst(double random, int outs, int speedIndex)
         {
             if (outs > 2)
                 return Outcome.ThrownOut;
 
-            if (random < FirstToThirdOutcomes[outs,0] * 100)
+            if (random < FirstToThirdOutcomes[outs,0])
                 return Outcome.AdvanceExtraBase;
-            else if (random < (FirstToThirdOutcomes[outs,0] + FirstToThirdOutcomes[outs,1]) * 100)
+            else if (random < (FirstToThirdOutcomes[outs,0] + FirstToThirdOutcomes[outs,1]))
                 return Outcome.ThrownOut;
             else
                 return Outcome.AdvanceNormal;
@@ -91,11 +91,11 @@ namespace BaseballLineupSimulator
         /// <param name="outs">number of outs</param>
         /// <param name="speedIndex">speed index of the player</param>
         /// <returns>the outcome of the event</returns>
-        public Outcome SingleWithRunnerOnSecond(int random, int outs, int speedIndex)
+        public Outcome SingleWithRunnerOnSecond(double random, int outs, int speedIndex)
         {
-            if (random < SecondToHomeOutcomes[outs,0] * 100)
+            if (random < SecondToHomeOutcomes[outs,0])
                 return Outcome.AdvanceExtraBase;
-            else if (random < (SecondToHomeOutcomes[outs,0] + SecondToHomeOutcomes[outs, 1]) * 100)
+            else if (random < (SecondToHomeOutcomes[outs,0] + SecondToHomeOutcomes[outs, 1]))
                 return Outcome.ThrownOut;
             else
                 return Outcome.AdvanceNormal;
@@ -108,11 +108,11 @@ namespace BaseballLineupSimulator
         /// <param name="outs">number of outs</param>
         /// <param name="speedIndex">speed index of the player</param>
         /// <returns>the outcome of the event</returns>
-        public Outcome DoubleWithRunnerOnFirst(int random, int outs, int speedIndex)
+        public Outcome DoubleWithRunnerOnFirst(double random, int outs, int speedIndex)
         {
-            if (random < FirstToHomeOutcomes[outs,0] * 100)
+            if (random < FirstToHomeOutcomes[outs,0])
                 return Outcome.AdvanceExtraBase;
-            else if (random < (FirstToHomeOutcomes[outs,0] + FirstToHomeOutcomes[outs, 1]) * 100)
+            else if (random < (FirstToHomeOutcomes[outs,0] + FirstToHomeOutcomes[outs, 1]))
                 return Outcome.ThrownOut;
             else
                 return Outcome.AdvanceNormal;

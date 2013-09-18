@@ -60,7 +60,7 @@ namespace BaseballLineupSimulator
 		        }
         		
                 //Action number determines what happens for this batter
-		        int actionNum =  RandomGenerator.Next(10000);
+		        double actionNum =  RandomGenerator.NextDouble();
 
                 
 		        //Bunt
@@ -72,39 +72,39 @@ namespace BaseballLineupSimulator
 		        } */
 
 		        //WALK
-		        if (actionNum < this.Lineup[this.AtBat].Walks * 10000 / this.Lineup[this.AtBat].Total_ABs)
+		        if (actionNum < this.Lineup[this.AtBat].Walks / this.Lineup[this.AtBat].PAs)
 		        {
 			        Walk();
 			        continue;
 		        }
-                actionNum -= this.Lineup[this.AtBat].Walks * 10000 / this.Lineup[this.AtBat].Total_ABs;
+                actionNum -= this.Lineup[this.AtBat].Walks / this.Lineup[this.AtBat].PAs;
         		
 		        //SINGLE
-		        if (actionNum < this.Lineup[this.AtBat].Singles * 10000 / this.Lineup[this.AtBat].Total_ABs)
+		        if (actionNum < this.Lineup[this.AtBat].Singles / this.Lineup[this.AtBat].PAs)
 		        {
 			        Single();
 			        continue;
 		        }
-		        actionNum -= this.Lineup[this.AtBat].Singles * 10000 / this.Lineup[this.AtBat].Total_ABs;
+		        actionNum -= this.Lineup[this.AtBat].Singles / this.Lineup[this.AtBat].PAs;
         		
 		        //DOUBLE
-		        if (actionNum < this.Lineup[this.AtBat].Doubles * 10000 / this.Lineup[this.AtBat].Total_ABs)
+		        if (actionNum < this.Lineup[this.AtBat].Doubles / this.Lineup[this.AtBat].PAs)
 		        {
 			        Double();
 			        continue;
 		        }
-		        actionNum -= this.Lineup[this.AtBat].Doubles * 10000 / this.Lineup[this.AtBat].Total_ABs;
+		        actionNum -= this.Lineup[this.AtBat].Doubles / this.Lineup[this.AtBat].PAs;
         		
 		        //TRIPLE
-		        if (actionNum < this.Lineup[this.AtBat].Triples * 10000 / this.Lineup[this.AtBat].Total_ABs)
+		        if (actionNum < this.Lineup[this.AtBat].Triples  / this.Lineup[this.AtBat].PAs)
 		        {
 			        Triple();
 			        continue;
 		        }
-		        actionNum -= this.Lineup[this.AtBat].Triples * 10000 / this.Lineup[this.AtBat].Total_ABs;
+		        actionNum -= this.Lineup[this.AtBat].Triples / this.Lineup[this.AtBat].PAs;
         		
 		        //HOME RUN
-		        if (actionNum < this.Lineup[this.AtBat].Homers * 10000 / this.Lineup[this.AtBat].Total_ABs)
+		        if (actionNum < this.Lineup[this.AtBat].Homers / this.Lineup[this.AtBat].PAs)
 		        {
 			        Homer();
 			        continue;
@@ -174,7 +174,7 @@ namespace BaseballLineupSimulator
 	        //Consider possibility of double-play
 	        if (bForce)
 	        {
-                if (RandomGenerator.Next(100) < Baserunning.DoublePlayPercent * 100)
+                if (RandomGenerator.NextDouble() < Baserunning.DoublePlayPercent)
 		        {
 			        this.Outs++;
 			        this.Bases[0] = null;
@@ -190,7 +190,7 @@ namespace BaseballLineupSimulator
 	        //Check for guy moving third to home
 	        if (this.Bases[2] != null && !bForce)
 	        {
-                if (RandomGenerator.Next(100) < Baserunning.PercentMoveThirdToHome * 100)
+                if (RandomGenerator.NextDouble() < Baserunning.PercentMoveThirdToHome)
 		        {   //Actually scores from third
 			        //Update stats
                     this.Bases[2].ActualRun++;
@@ -200,7 +200,7 @@ namespace BaseballLineupSimulator
                     this.Bases[2] = null;
 			        this.Runs++;	
 		        }
-                else if (RandomGenerator.Next(100) < Baserunning.PercentThrownOutAdvancing * 100)
+                else if (RandomGenerator.NextDouble() < Baserunning.PercentThrownOutAdvancing)
 		        {
 			        //Thrown out trying to score
 			        this.Bases[2] = null;
@@ -211,13 +211,13 @@ namespace BaseballLineupSimulator
 	        //See if this guy moves second to third
 	        if (this.Bases[1] != null && !bForce)
 	        {
-                if (RandomGenerator.Next(100) < Baserunning.PercentMoveThirdToHome * 100)
+                if (RandomGenerator.NextDouble() < Baserunning.PercentMoveThirdToHome)
 		        {
 			        //Makes it from second to third
 			        this.Bases[2] = this.Bases[1];
 			        this.Bases[1] = null;
 		        }
-                else if (RandomGenerator.Next(100) < Baserunning.PercentThrownOutAdvancing * 100)
+                else if (RandomGenerator.NextDouble() < Baserunning.PercentThrownOutAdvancing)
 		        {
 			        //Thrown out trying to advance
 			        this.Bases[1] = null;
@@ -276,7 +276,7 @@ namespace BaseballLineupSimulator
 	        if (this.Bases[1] != null) 
 	        {
                 //Runner on second with this single
-                Baserunning.Outcome outcome = baserunning.SingleWithRunnerOnSecond(RandomGenerator.Next(100), 
+                Baserunning.Outcome outcome = baserunning.SingleWithRunnerOnSecond(RandomGenerator.NextDouble(), 
                     this.Outs, (int) this.Bases[1].SpeedIndex);
                 if (outcome == Baserunning.Outcome.AdvanceExtraBase) //Scores from second
 		        {   //Runner scores from second
@@ -306,7 +306,7 @@ namespace BaseballLineupSimulator
                 if (this.Bases[2] == null) //Third is clear, attempt to advance maybe?
                 {
                     //Runner on second with this single
-                    Baserunning.Outcome outcome = baserunning.SingleWithRunnerOnFirst(RandomGenerator.Next(100),
+                    Baserunning.Outcome outcome = baserunning.SingleWithRunnerOnFirst(RandomGenerator.NextDouble(),
                         this.Outs, (int) this.Bases[0].SpeedIndex);
                     if (outcome == Baserunning.Outcome.AdvanceExtraBase) 
                     {
@@ -363,7 +363,7 @@ namespace BaseballLineupSimulator
 	        if (this.Bases[0] != null) 
 	        {
                 //Consider event when runner on first with a double
-                Baserunning.Outcome outcome = baserunning.DoubleWithRunnerOnFirst(RandomGenerator.Next(100),
+                Baserunning.Outcome outcome = baserunning.DoubleWithRunnerOnFirst(RandomGenerator.NextDouble(),
                     this.Outs, (int)this.Bases[0].SpeedIndex);
                 if (outcome == Baserunning.Outcome.AdvanceExtraBase) //Scores from first
 		        {
@@ -482,7 +482,7 @@ namespace BaseballLineupSimulator
 	        int nLeadRunner=2;
 	        while (this.Bases[nLeadRunner] == null)
 		        nLeadRunner--;
-            if (RandomGenerator.Next(100) < BaseballGame.PercentBuntSuccess)
+            if (RandomGenerator.NextDouble() < BaseballGame.PercentBuntSuccess)
 	        {
 		        //Bunt succeeds, move runner(s) over
 		        PushOneBase(nLeadRunner+1, this.Bases[nLeadRunner]);
@@ -506,14 +506,14 @@ namespace BaseballLineupSimulator
 	        {
 		        bool bSteal;
                 if (this.Bases[1] != null)
-                    bSteal = RandomGenerator.Next(100) < this.Bases[1].StealAttemptPercent;
+                    bSteal = RandomGenerator.NextDouble() < this.Bases[1].StealAttemptPercent;
                 else
-                    bSteal = RandomGenerator.Next(100) < this.Bases[0].StealAttemptPercent;
+                    bSteal = RandomGenerator.NextDouble() < this.Bases[0].StealAttemptPercent;
 
 		        //Steal second to third
 		        if (this.Bases[1] != null && bSteal)
 		        {
-                    bool bStealSuccess = RandomGenerator.Next(100) < this.Bases[1].StealSuccessPercent;
+                    bool bStealSuccess = RandomGenerator.NextDouble() < this.Bases[1].StealSuccessPercent;
 			        if (bStealSuccess)
 			        {
 				        /*sOutput += this.Bases[1].sName + " steals third. ";
@@ -533,7 +533,7 @@ namespace BaseballLineupSimulator
 		        }
 		        else if (this.Bases[0] != null && bSteal)
 		        {
-                    bool bStealSuccess = RandomGenerator.Next(100) < this.Bases[0].StealSuccessPercent;
+                    bool bStealSuccess = RandomGenerator.NextDouble() < this.Bases[0].StealSuccessPercent;
 			        if (bStealSuccess)
 			        {
 				        //sOutput += this.Bases[0].sName + " steals second.";

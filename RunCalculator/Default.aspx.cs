@@ -158,7 +158,7 @@ namespace RunCalculator
             //Validate individual player entries    
             for (int i = 0; i < lineup.Count; i++)
             {   //Make sure player has > 0 at-bats
-                if (lineup[i].Total_ABs <= 0)
+                if (lineup[i].PAs <= 0)
                 {
                     errorText += "*Batter " + (i + 1).ToString() + " must have more than 0 At-Bats<br>";
                     bResult = false;
@@ -417,7 +417,7 @@ namespace RunCalculator
             Player player = this.ReadPlayerData(index);
             if (player.Name.Trim().Length != 0)
                 return false;
-            if (player.Total_ABs > 0 || player.Walks > 0 || player.Singles > 0 || player.Doubles > 0 || player.Triples > 0 ||
+            if (player.PAs > 0 || player.Walks > 0 || player.Singles > 0 || player.Doubles > 0 || player.Triples > 0 ||
                 player.Homers > 0 || player.Steals > 0 || player.CaughtStealing > 0)
                 return false;
             return true;

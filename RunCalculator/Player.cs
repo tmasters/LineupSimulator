@@ -20,7 +20,7 @@ namespace BaseballLineupSimulator
         public string UID;      //Unique ID (unused)
         public string Name;     //Name
         public int Position;    //Position (first base, catcher, etc) 1-9
-        public int ABs;         //At-bats not-including walks
+        public int ABs;         //At-Bats (no walks)
         public int Walks;
         public int Singles;
         public int Doubles;
@@ -108,9 +108,9 @@ namespace BaseballLineupSimulator
         }
 
         /// <summary>
-        /// At bats including walks
+        /// Plate appearances (ABs + walks)
         /// </summary>
-        public int Total_ABs
+        public int PAs
         {
             get
             {
@@ -125,7 +125,7 @@ namespace BaseballLineupSimulator
         {
             get
             {
-                return (double)(this.Singles + this.Doubles + this.Triples + this.Homers) / (this.Total_ABs - this.Walks);
+                return (double)(this.Singles + this.Doubles + this.Triples + this.Homers) / (this.PAs - this.Walks);
             }
         }
 
@@ -136,7 +136,7 @@ namespace BaseballLineupSimulator
         {
             get
             {
-                return (double)(this.Singles + this.Doubles + this.Triples + this.Homers + this.Walks) / (this.Total_ABs);
+                return (double)(this.Singles + this.Doubles + this.Triples + this.Homers + this.Walks) / (this.PAs);
             }
         }
 
@@ -147,7 +147,7 @@ namespace BaseballLineupSimulator
         {
             get
             {
-                return (double)(this.Singles + this.Doubles * 2 + this.Triples * 3 + this.Homers * 4) / (this.Total_ABs - this.Walks);
+                return (double)(this.Singles + this.Doubles * 2 + this.Triples * 3 + this.Homers * 4) / (this.PAs - this.Walks);
             }
         }
 
@@ -159,7 +159,7 @@ namespace BaseballLineupSimulator
         {
             get
             {
-                return 100 * (this.Steals + this.CaughtStealing) / (double)(this.Walks + this.Singles);
+                return (this.Steals + this.CaughtStealing) / (double)(this.Walks + this.Singles);
             }
         }
 
@@ -170,7 +170,7 @@ namespace BaseballLineupSimulator
         {
             get
             {
-                return 100 * (this.Steals) / (double)(this.Steals + this.CaughtStealing);
+                return (this.Steals) / (double)(this.Steals + this.CaughtStealing);
             }
         }
 
