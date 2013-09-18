@@ -110,7 +110,7 @@ namespace BaseballLineupSimulator
         /// <summary>
         /// Plate appearances (ABs + walks)
         /// </summary>
-        public int PAs
+        public double PAs
         {
             get
             {
