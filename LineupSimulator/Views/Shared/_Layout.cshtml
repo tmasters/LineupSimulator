@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="@Url.Content("~/Content/Bootstrap/css/bootstrap.css")" type="text/css" />
+    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" /> 
+    
+    <style type="text/css">
+       
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div style="width: 100%; text-align: center; margin-bottom: 10px;  border-radius: 4px 4px 4px 4px;
+    -webkit-border-radius: 4px 4px 4px 4px;
+    -moz-border-radius: 4px 4px 4px 4px; background-color:White;">
+            <img src="@Url.Content("~/Content/Images/LineupSimulator2b.jpg")" />
+        </div>
+        <div>
+            <ul id='menu'>
+                <li><a href="@Url.Action("Index")">FULL SIMULATOR</a></li>
+                <!--<li><a href="@Url.Action("Quick")">QUICK SIMULATOR</a></li> -->
+                <li><a href="http://lineupsimulator.wordpress.com/about/">ABOUT</a></li>
+                <li><a href="http://lineupsimulator.wordpress.com/">BLOG</a></li>
+            </ul>
+        </div>
+        <div id="main" style="width:100%">
+           @RenderBody()
+        </div>
+
+    </div> <!-- /container -->
+</body>
+</html>
